@@ -244,7 +244,7 @@ def read_config(section=None):
     if scheme == 'local':
         server = shlex.split(env.get('options', ''))
     else:
-        server = '%s://%s:%s' % (scheme, env['host'], env['port'])
+        server = '%s://%s' % (scheme, env['host'])
     return (server, env['database'], env['username'], env.get('password'))
 
 
@@ -357,7 +357,7 @@ class Service(object):
 
     def __init__(self, server, endpoint, methods,
                  transport=None, verbose=False):
-        if isinstance(server, basestring):
+        if isinstance(server, (basestring, unicode)):
             self._rpcpath = rpcpath = server + '/xmlrpc/'
             proxy = ServerProxy(rpcpath + endpoint,
                                 transport=transport, allow_none=True)
